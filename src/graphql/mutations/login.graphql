@@ -1,0 +1,16 @@
+mutation Login($body: LoginUserDto!) {
+  login(body: $body) {
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      firstName
+      lastName
+      username
+      createdAt
+      updatedAt
+    }
+  }
+}

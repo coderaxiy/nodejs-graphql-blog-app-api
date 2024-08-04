@@ -1,0 +1,12 @@
+mutation Register($body: CreatUserDto!) {
+  register(body: $body) {
+    errors {
+      field
+      message
+    }
+    id
+    firstName
+    lastName
+    createdAt
+  }
+}
