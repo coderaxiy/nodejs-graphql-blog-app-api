@@ -14,7 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "mutation Login($body: LoginUserDto!) {\n  login(body: $body) {\n    errors {\n      field\n      message\n    }\n    user {\n      id\n      firstName\n      lastName\n      username\n      createdAt\n      updatedAt\n    }\n  }\n}": types.LoginDocument,
+    "mutation Logout {\n  logout\n}": types.LogoutDocument,
     "mutation Register($body: CreatUserDto!) {\n  register(body: $body) {\n    errors {\n      field\n      message\n    }\n    id\n    firstName\n    lastName\n    createdAt\n  }\n}": types.RegisterDocument,
+    "query Me {\n  me {\n    error {\n      code\n      message\n    }\n    id\n    firstName\n    lastName\n    username\n    createdAt\n    updatedAt\n  }\n}": types.MeDocument,
+    "query Posts {\n  posts {\n    id\n    title\n    createdAt\n    updatedAt\n  }\n}": types.PostsDocument,
 };
 
 /**
@@ -38,7 +41,19 @@ export function graphql(source: "mutation Login($body: LoginUserDto!) {\n  login
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "mutation Logout {\n  logout\n}"): (typeof documents)["mutation Logout {\n  logout\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "mutation Register($body: CreatUserDto!) {\n  register(body: $body) {\n    errors {\n      field\n      message\n    }\n    id\n    firstName\n    lastName\n    createdAt\n  }\n}"): (typeof documents)["mutation Register($body: CreatUserDto!) {\n  register(body: $body) {\n    errors {\n      field\n      message\n    }\n    id\n    firstName\n    lastName\n    createdAt\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query Me {\n  me {\n    error {\n      code\n      message\n    }\n    id\n    firstName\n    lastName\n    username\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Me {\n  me {\n    error {\n      code\n      message\n    }\n    id\n    firstName\n    lastName\n    username\n    createdAt\n    updatedAt\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query Posts {\n  posts {\n    id\n    title\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Posts {\n  posts {\n    id\n    title\n    createdAt\n    updatedAt\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
