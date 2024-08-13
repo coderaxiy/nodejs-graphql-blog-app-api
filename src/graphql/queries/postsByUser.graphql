@@ -1,0 +1,15 @@
+query UserPosts {
+    id
+    title
+    description
+    imageUrl
+    createdAt
+    updatedAt
+    user {
+        id
+        firstName
+        lastName
+        username
+        image
+    }
+}

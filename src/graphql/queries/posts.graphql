@@ -3,6 +3,7 @@ query Posts {
     id
     title
     description
+    imageUrl
     createdAt
     updatedAt
   }

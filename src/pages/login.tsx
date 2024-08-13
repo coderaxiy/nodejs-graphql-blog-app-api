@@ -19,6 +19,8 @@ import { errorMap } from "../utils/errorMap";
 import { useRouter } from "next/router";
 import AuthLayout from "../components/layouts/auth-layout";
 import { FaUserAlt, FaLock } from "react-icons/fa";
+import { withUrqlClient } from "next-urql";
+import { createUrqlClient } from "../utils/createUrqlClient";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -144,4 +146,4 @@ const Login: React.FC<loginProps> = ({}) => {
   );
 };
 
-export default Login;
+export default withUrqlClient(createUrqlClient, {ssr: false})(Login);

@@ -4,14 +4,12 @@ import {
   Box,
   Flex,
   Avatar,
-  Text,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
   useColorMode,
@@ -53,79 +51,20 @@ const NavLink = (props: Props) => {
 
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [{ data, fetching }] = useMeQuery();
+  const [{ data, fetching }] = useMeQuery({
+    pause: typeof window === "undefined",
+  });
   const [{ fetching: loggingOut }, logout] = useLogoutMutation();
-
-  let renderItem: JSX.Element;
 
   if (fetching) {
     <CircularProgress isIndeterminate color="green.300" />;
-  } else if (data?.me?.id) {
-    renderItem = (
-      <Menu>
-        <MenuButton
-          as={Button}
-          rounded={"full"}
-          variant={"link"}
-          cursor={"pointer"}
-          minW={0}
-        >
-          <Avatar
-            size={"sm"}
-            name={`${data.me.firstName} ${data.me.lastName}`}
-            src={""}
-          />
-        </MenuButton>
-        <MenuList alignItems={"center"}>
-          <br />
-          <Center>
-            <Avatar
-              size={"xl"}
-              name={`${data.me.firstName} ${data.me.lastName}`}
-              src={""}
-            />
-          </Center>
-          <br />
-          <Center>
-            <p>{data.me.username}</p>
-          </Center>
-          <br />
-          <MenuDivider />
-          <MenuItem>Your Servers</MenuItem>
-          <MenuItem>Account Settings</MenuItem>
-          <Button
-            onClick={() => {
-              logout({}).then();
-            }}
-            borderRadius={0}
-            type="submit"
-            variant="solid"
-            isLoading={loggingOut}
-            colorScheme="teal"
-            width="full"
-          >
-            Logout
-          </Button>
-        </MenuList>
-      </Menu>
-    );
-  } else {
-    renderItem = (
-      <Box>
-        <NavLink href={"/login"}>Sign In</NavLink>
-
-        <NavLink href={"/register"}>Sign Up</NavLink>
-      </Box>
-    );
   }
 
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <Box>
-            <RegisterIcon size={44} />
-          </Box>
+          <RegisterIcon size={44} />
 
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
@@ -133,7 +72,58 @@ export default function Navbar() {
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
             </Stack>
-            {renderItem}
+            {data?.me?.id ? (
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
+                >
+                  <Avatar
+                    size={"sm"}
+                    name={`${data.me.firstName} ${data.me.lastName}`}
+                    src={""}
+                  />
+                </MenuButton>
+                <MenuList alignItems={"center"}>
+                  <br />
+                  <Center>
+                    <Avatar
+                      size={"xl"}
+                      name={`${data.me.firstName} ${data.me.lastName}`}
+                      src={""}
+                    />
+                  </Center>
+                  <br />
+                  <Center>
+                    <p>{data.me.username}</p>
+                  </Center>
+                  <br />
+                  <MenuDivider />
+                  <MenuItem>Your Servers</MenuItem>
+                  <MenuItem>Account Settings</MenuItem>
+                  <Button
+                    onClick={() => {
+                      logout({}).then();
+                    }}
+                    borderRadius={0}
+                    type="submit"
+                    variant="solid"
+                    isLoading={loggingOut}
+                    colorScheme="teal"
+                    width="full"
+                  >
+                    Logout
+                  </Button>
+                </MenuList>
+              </Menu>
+            ) : (
+              <Box>
+                <NavLink href={"/login"}>Kirish</NavLink>
+              </Box>
+            )}
           </Flex>
         </Flex>
       </Box>

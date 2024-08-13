@@ -17,7 +17,7 @@ const documents = {
     "mutation Logout {\n  logout\n}": types.LogoutDocument,
     "mutation Register($body: CreatUserDto!) {\n  register(body: $body) {\n    errors {\n      field\n      message\n    }\n    id\n    firstName\n    lastName\n    createdAt\n  }\n}": types.RegisterDocument,
     "query Me {\n  me {\n    error {\n      code\n      message\n    }\n    id\n    firstName\n    lastName\n    username\n    createdAt\n    updatedAt\n  }\n}": types.MeDocument,
-    "query Posts {\n  posts {\n    id\n    title\n    createdAt\n    updatedAt\n  }\n}": types.PostsDocument,
+    "query Posts {\n  posts {\n    id\n    title\n    description\n    imageUrl\n    createdAt\n    updatedAt\n  }\n}": types.PostsDocument,
 };
 
 /**
@@ -53,7 +53,7 @@ export function graphql(source: "query Me {\n  me {\n    error {\n      code\n  
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query Posts {\n  posts {\n    id\n    title\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Posts {\n  posts {\n    id\n    title\n    createdAt\n    updatedAt\n  }\n}"];
+export function graphql(source: "query Posts {\n  posts {\n    id\n    title\n    description\n    imageUrl\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Posts {\n  posts {\n    id\n    title\n    description\n    imageUrl\n    createdAt\n    updatedAt\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
